@@ -70,6 +70,18 @@ func (f *ContractTestSuite) Test_SignTransaction() {
 	// log.Println("转换回 []byte 长度:", len(sigBytes))
 	// log.Println(sigBytes)
 }
+
+func (f *ContractTestSuite) Test_ClaimAmount() {
+	amount, err := f.ContractServiceI.ClaimAmount(common.HexToAddress("0xF321240E4E2880910f24d67B8C9B9299767988fe"))
+	log.Println(amount)
+	f.Require().Nil(err)
+}
+
+func (f *ContractTestSuite) Test_TotolClaimAmount() {
+	amount, err := f.ContractServiceI.TotolClaimAmount()
+	log.Println(amount)
+	f.Require().Nil(err)
+}
 func initViperV1() {
 	cfile := pflag.String(
 		"config",

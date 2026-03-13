@@ -50,7 +50,7 @@ func InitGinMiddlewares(
 					//if strings.Contains(origin, "localhost") {
 					return true
 				}
-				return strings.Contains(origin, "4bsc.ai")
+				return strings.Contains(origin, "aibtc.work")
 			},
 			MaxAge: 12 * time.Hour,
 		}),

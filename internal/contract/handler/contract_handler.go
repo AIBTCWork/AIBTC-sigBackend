@@ -30,6 +30,8 @@ func (h *ContractHandler) RegisterRoutes(server *gin.Engine) {
 	c := server.Group("/contract")
 	{
 		c.GET("/balance", h.BalanceOf)
+		c.GET("/claim_amount", h.ClaimAmount)
+		c.GET("/total_claim_amount", h.TotolClaimAmount)
 	}
 }
 
@@ -58,6 +60,25 @@ func (h *ContractHandler) BalanceOf(c *gin.Context) {
 	}
 	account := common.HexToAddress(address)
 	res, err := h.contractService.BalanceOf(account)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+	}
+	c.JSON(http.StatusOK, gin.H{"balance": res})
+}
+func (h *ContractHandler) ClaimAmount(c *gin.Context) {
+	address := c.Query("address")
+	if address == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "address is required"})
+	}
+	account := common.HexToAddress(address)
+	res, err := h.contractService.ClaimAmount(account)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+	}
+	c.JSON(http.StatusOK, gin.H{"balance": res})
+}
+func (h *ContractHandler) TotolClaimAmount(c *gin.Context) {
+	res, err := h.contractService.TotolClaimAmount()
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 	}
